@@ -14,10 +14,34 @@ void ATankPlayerController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Couldn't posses tank"));
 	}
-	else
+}
+
+void ATankPlayerController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	AimTowardsCrosshair();
+}
+
+void ATankPlayerController::AimTowardsCrosshair()
+{
+	if (!GetControlledTank()) { return; }
+
+	FVector HitLocation;		//Out Location
+
+	
+	//if we hit the landscape while aiming
+	if (GetSightRayHitLocation(HitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Possesing %s"), *ControlledTank->GetName());
-	}	
+		//move to where it hit
+	}
+		
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *HitLocation.ToString());
+}
+
+bool ATankPlayerController::GetSightRayHitLocation(FVector & HitLocation) const
+{
+	HitLocation = FVector(1.0f);
+	return true;
 }
 
 ATank* ATankPlayerController::GetControlledTank() const
