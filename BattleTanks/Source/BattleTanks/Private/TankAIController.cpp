@@ -15,10 +15,18 @@ void ATankAIController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Couldn't find player tank"));
 	}
-	else
+}
+
+void ATankAIController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if (GetPlayerTank())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Player Tank name %s"), *PlayerTank->GetName());
+		FVector PlayerLocation = GetPlayerTank()->GetActorLocation();
+		GetControlledTank()->AimAt(PlayerLocation);
 	}
+		
 }
 
 ATank* ATankAIController::GetControlledTank() const

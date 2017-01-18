@@ -32,7 +32,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	//if we hit the landscape while aiming
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		//move to where it hit
+		GetControlledTank()->AimAt(HitLocation);
 	}
 }
 
@@ -52,7 +52,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & HitLocation) const
 	{
 		// Line-trace along that look direction, and see what we hit (up to max range)
 		GetLookVectorHitLocation(HitLocation, LookDirection);
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *HitLocation.ToString());
 	}
 	
 	return true;
