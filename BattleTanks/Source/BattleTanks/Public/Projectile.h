@@ -16,10 +16,13 @@ public:
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	void LaunchProjectile(float Speed);
 	
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
-	
+private:
+	UProjectileMovementComponent* Projectile = nullptr;
 	
 };
