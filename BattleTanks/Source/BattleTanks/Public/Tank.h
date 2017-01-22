@@ -7,6 +7,7 @@
 
 //Forward declaration
 class UTankAimingComponent;
+class UTankMovementComponent;
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
@@ -29,6 +30,7 @@ public:
 
 protected:
 	UTankAimingComponent* AimingComponent= nullptr;
+
 private:
 	// Sets default values for this pawn's properties
 	ATank();
@@ -39,16 +41,18 @@ private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
-	UPROPERTY(EditAnywhere, Category = "Firing")
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 100000;
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float ReloadTimeInSeconds = 3.0f;
 	
-	UPROPERTY(EditAnywhere, Category = "Setup")
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UTankBarrel* Barrel = nullptr;
 
 	double LastTimeFired = 0.0;
 
-	float ReloadTimeInSeconds = 3.0f;
+
 	
 };
