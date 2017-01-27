@@ -1,27 +1,31 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTanks.h"
-#include "Tank.h"
+#include "TankAimingComponent.h"
 #include "TankAIController.h"
 
+void ATankAIController::BeginPlay()
+{
+	Super::BeginPlay();
+	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+}
 
 void ATankAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	auto AITank = Cast<ATank>(GetPawn());
-	auto Player = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	auto Player = GetWorld()->GetFirstPlayerController()->GetPawn();
 
-	if (AITank || Player)
+	if (ensure(AimingComponent && Player))
 	{
 		//Move towards player
-		MoveToActor(Player, AcceptanceRadius);		//TODO check radius is in cm
+		MoveToActor(Player, AcceptanceRadius);		
 
 		FVector PlayerLocation = Player->GetActorLocation();
-		AITank->AimAt(PlayerLocation);
+		AimingComponent->AimAt(PlayerLocation);
 
 		//Fire if ready
-		AITank->Fire();
+		AimingComponent->Fire();
 	}
 		
 }
