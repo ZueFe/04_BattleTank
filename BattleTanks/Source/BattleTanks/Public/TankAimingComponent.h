@@ -43,9 +43,13 @@ private:
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
+	FVector AimDirection = FVector::ZeroVector;
 
 	void MoveBarrelTowards(FVector AimDirection);
 	void RotateTurretTowards(FVector AimDirection);
+	bool IsBarrelMoving();
+	virtual void TickComponent(float DeltaSeconds, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
